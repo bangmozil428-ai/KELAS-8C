@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>🌲 Kelas 8C - SMPN 1 Lima Puluh</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Poppins', system-ui, sans-serif;
+        }
+        body {
+            background: #0f1f0d;
+            color: #e8f0e5;
+            min-height: 100vh;
+            padding: 20px;
+            background-image: 
+                radial-gradient(ellipse at 20% 50%, #1a3a1a 0%, #0a150a 90%),
+                repeating-linear-gradient(45deg, rgba(34, 68, 34, 0.03) 0px, rgba(34, 68, 34, 0.03) 2px, transparent 2px, transparent 6px);
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* ===== FLOATING HUTAN ===== */
+        .floating {
+            position: fixed;
+            font-size: 2rem;
+            opacity: 0.10;
+            pointer-events: none;
+            z-index: 0;
+            animation: floatAnim linear infinite;
+        }
+        @keyframes floatAnim {
+            0% { transform: translateY(-10vh) rotate(0deg) scale(0.7); opacity: 0.03; }
+            50% { opacity: 0.14; }
+            100% { transform: translateY(110vh) rotate(360deg) scale(1.1); opacity: 0; }
+        }
+
+        .container {
+            max-width: 1150px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ===== HEADER HUTAN ===== */
+        .header {
+            background: rgba(20, 40, 18, 0.88);
+            backdrop-filter: blur(12px);
+            padding: 30px 25px 20px;
+            border-radius: 40px 40px 20px 20px;
+            text-align: center;
+            border: 1px solid rgba(100, 180, 80, 0.25);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7), inset 0 0 80px rgba(60, 120, 40, 0.05);
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        .header::before { content: "🌲"; position: absolute; left: 15px; top: 5px; font-size: 3.5rem; opacity: 0.15; }
+        .header::after { content: "🌳"; position: absolute; right: 15px; bottom: 5px; font-size: 3.5rem; opacity: 0.15; }
+        .header .badge {
+            display: inline-block;
+            background: #3a7a2a;
+            color: #f2f9f0;
+            padding: 6px 24px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            border: 1px solid #6aaa4e;
+        }
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #7acf5a, #4a8a3a, #d4a373);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+        }
+        .header .sekolah {
+            font-size: 1.3rem;
+            color: #c4d4b0;
+            font-weight: 600;
+            margin-top: 4px;
+        }
+        .header .sub {
+            font-size: 1rem;
+            color: #a0b890;
+            margin-top: 4px;
+            letter-spacing: 1px;
+        }
+        .header .motto {
+            margin-top: 10px;
+            font-style: italic;
+            color: #cfe1c5;
+            background: rgba(255,255,255,0.04);
+            display: inline-block;
+            padding: 6px 22px;
+            border-radius: 30px;
+            border-left: 3px solid #6aaa4e;
+            font-size: 0.95rem;
+        }
+
+        /* ===== NAV ===== */
+        .nav {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+        .nav button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 40px;
+            background: rgba(30, 60, 26, 0.7);
+            backdrop-filter: blur(4px);
+            color: #cfe1c5;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: 0.3s;
+            border: 1px solid rgba(100, 180, 80, 0.15);
+            flex: 1 1 auto;
+        }
+        .nav button.active {
+            background: #3a7a2a;
+            color: #0f1f0d;
+            box-shadow: 0 0 30px rgba(60, 160, 40, 0.3);
+            border-color: #6aaa4e;
+        }
+        .nav button:hover {
+            transform: translateY(-3px);
+            background: #4a9a3a;
+            color: #0a150a;
+        }
+
+        /* ===== PAGE ===== */
+        .page { display: none; animation: fadeUp 0.5s ease; }
+        .page.active { display: block; }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== CARD HUTAN ===== */
+        .card {
+            background: rgba(18, 38, 16, 0.75);
+            backdrop-filter: blur(8px);
+            border-radius: 28px;
+            padding: 28px 30px;
+            border: 1px solid rgba(100, 180, 80, 0.10);
+            margin-bottom: 24px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+        .card .bg-icon {
+            position: absolute;
+            right: 10px;
+            bottom: 5px;
+            font-size: 4rem;
+            opacity: 0.04;
+            pointer-events: none;
+        }
+        .card h2 {
+            font-size: 2rem;
+            color: #c4d4b0;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .card h2 span {
+            background: #4a8a3a;
+            width: 6px;
+            height: 30px;
+            border-radius: 10px;
+            display: inline-block;
+        }
+        .card p { line-height: 1.8; color: #d4dfd0; }
+        .card strong { color: #7acf5a; }
+
+        /* ===== VISI MISI ===== */
+        .vm-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+        @media (max-width:650px) { .vm-grid { grid-template-columns: 1fr; } }
+        .vm-item {
+            background: rgba(30, 60, 26, 0.5);
+            padding: 22px 24px;
+            border-radius: 20px;
+            border-left: 5px solid #4a8a3a;
+            position: relative;
+        }
+        .vm-item .icon {
+            position: absolute;
+            right: 12px;
+            top: 8px;
+            font-size: 2.2rem;
+            opacity: 0.12;
+        }
+        .vm-item h3 { color: #c4d4b0; margin-bottom: 6px; font-size: 1.3rem; }
+        .vm-item p { color: #cfe1c5; }
+
+        /* ===== PROFIL ===== */
+        .profil-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        @media (max-width:700px) { .profil-grid { grid-template-columns: 1fr; } }
+        .profil-box {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            background: rgba(30, 60, 26, 0.5);
+            padding: 20px 24px;
+            border-radius: 24px;
+            border: 1px solid rgba(100, 180, 80, 0.08);
+            position: relative;
+        }
+        .profil-box .bg-icon {
+            position: absolute;
+            right: 12px;
+            bottom: 8px;
+            font-size: 3rem;
+            opacity: 0.04;
+            pointer-events: none;
+        }
+        .profil-box .avatar {
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            border: 3px solid #4a8a3a;
+            flex-shrink: 0;
+            background: linear-gradient(135deg, #2a5a22, #4a8a3a);
+        }
+        .profil-box .info h3 { font-size: 1.3rem; color: #c4d4b0; }
+        .profil-box .info .title { color: #7acf5a; font-weight: 600; font-size: 0.85rem; }
+        .profil-box .info p { color: #cfe1c5; margin-top: 4px; font-style: italic; font-size: 0.9rem; }
+
+        /* ===== STRUKTUR ===== */
+        .struktur-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(170px,1fr));
+            gap: 18px;
+            margin-top: 10px;
+        }
+        .struktur-card {
+            background: rgba(30, 60, 26, 0.5);
+            padding: 16px 12px;
+            border-radius: 18px;
+            text-align: center;
+            border: 1px solid rgba(100, 180, 80, 0.06);
+            transition: 0.3s;
+        }
+        .struktur-card:hover {
+            transform: translateY(-5px);
+            border-color: #4a8a3a;
+            background: rgba(60, 160, 40, 0.12);
+        }
+        .struktur-card .emoji { font-size: 2rem; }
+        .struktur-card .jabatan { font-size: 0.8rem; color: #7acf5a; font-weight: 600; letter-spacing: 0.5px; }
+        .struktur-card .nama { font-weight: 600; font-size: 1rem; color: #e8f0e5; }
+
+        /* ===== JADWAL PELAJARAN ===== */
+        .jadwal-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px,1fr));
+            gap: 20px;
+        }
+        .hari-card {
+            background: rgba(30, 60, 26, 0.4);
+            border-radius: 20px;
+            padding: 18px 20px;
+            border: 1px solid rgba(100, 180, 80, 0.06);
+        }
+        .hari-card h3 {
+            color: #c4d4b0;
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            text-align: center;
+            border-bottom: 1px solid rgba(100, 180, 80, 0.08);
+            padding-bottom: 8px;
+        }
+        .mapel-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 4px;
+            border-bottom: 1px solid rgba(255,255,255,0.02);
+            font-size: 0.9rem;
+        }
+        .mapel-item .waktu { color: #7acf5a; font-weight: 600; }
+        .mapel-item .mapel { color: #d4dfd0; }
+        .mapel-item.istirahat {
+            background: rgba(60, 160, 40, 0.08);
+            border-radius: 10px;
+            padding: 6px 12px;
+            margin: 4px 0;
+            text-align: center;
+            color: #c4d4b0;
+            font-weight: 600;
+            font-size: 0.85rem;
+            justify-content: center;
+        }
+
+        /* ===== JADWAL PIKET - MELEBAR ===== */
+        .piket-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+            gap: 20px;
+        }
+        .piket-card {
+            background: rgba(30, 60, 26, 0.4);
+            border-radius: 20px;
+            padding: 18px 16px;
+            border: 1px solid rgba(100, 180, 80, 0.06);
+            text-align: center;
+        }
+        .piket-card h3 {
+            color: #c4d4b0;
+            font-size: 1.2rem;
+            border-bottom: 1px solid rgba(100, 180, 80, 0.08);
+            padding-bottom: 8px;
+            margin-bottom: 10px;
+        }
+        .piket-card .piket-nama {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 6px 12px;
+        }
+        .piket-card .piket-nama span {
+            background: rgba(60, 160, 40, 0.12);
+            padding: 4px 14px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            color: #d4dfd0;
+            border: 1px solid rgba(100, 180, 80, 0.06);
+        }
+
+        /* ===== SISWA ===== */
+        .siswa-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px,1fr));
+            gap: 18px;
+        }
+        .siswa-card {
+            background: rgba(30, 60, 26, 0.4);
+            padding: 16px 10px;
+            border-radius: 20px;
+            text-align: center;
+            border: 1px solid rgba(100, 180, 80, 0.04);
+            transition: 0.3s;
+        }
+        .siswa-card:hover {
+            border-color: #4a8a3a;
+            transform: translateY(-4px);
+            background: rgba(60, 160, 40, 0.10);
+        }
+        .siswa-card .avatar {
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            margin: 0 auto 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #0f1f0d;
+            background: #4a8a3a;
+            border: 2px solid #6aaa4e;
+        }
+        .siswa-card .nama { font-weight: 500; font-size: 0.9rem; color: #e8f0e5; }
+        .siswa-card .keterangan { font-size: 0.7rem; color: #7acf5a; font-weight: 600; }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            text-align: center;
+            padding: 25px 0 10px;
+            border-top: 1px solid rgba(100, 180, 80, 0.06);
+            color: #5a7a4a;
+            font-size: 0.85rem;
+            margin-top: 10px;
+        }
+
+        @media (max-width:600px) {
+            .header h1 { font-size: 2rem; }
+            .header .sekolah { font-size: 1rem; }
+            .nav button { flex: 1 1 100%; }
+            .profil-box { flex-direction: column; text-align: center; }
+            .siswa-grid { grid-template-columns: repeat(auto-fill,minmax(120px,1fr)); }
+            .jadwal-grid { grid-template-columns: 1fr; }
+            .piket-grid { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== FLOATING HUTAN ===== -->
+    <div id="floatingContainer"></div>
+
+    <div class="container">
+        <!-- ===== HEADER ===== -->
+        <header class="header">
+            <div class="badge">🌲 Kelas 8C</div>
+            <h1>🌳 RIMBA ILMU</h1>
+            <div class="sekolah">🏫 SMP Negeri 1 Lima Puluh</div>
+            <div class="sub">Kelas 8C — Berprestasi, Berkarakter, Berakhlak</div>
+            <div class="motto">"Bersama kita raih prestasi, jaga kebersamaan!"</div>
+        </header>
+
+        <!-- ===== NAV ===== -->
+        <nav class="nav">
+            <button class="active" data-page="home">🏕️ Home</button>
+            <button data-page="struktur">🌳 Struktur</button>
+            <button data-page="jadwal">📅 Jadwal</button>
+            <button data-page="piket">🧹 Piket</button>
+            <button data-page="siswa">🌿 Siswa</button>
+        </nav>
+
+        <!-- ===== HOME ===== -->
+        <div id="home" class="page active">
+            <div class="card">
+                <div class="bg-icon">🌲</div>
+                <h2><span></span> 🏕️ Selamat Datang di Rimba Ilmu 8C</h2>
+                <p>
+                    <strong>Kelas 8C SMP Negeri 1 Lima Puluh</strong> adalah keluarga besar yang terdiri dari <strong>32 siswa</strong>, 
+                    <strong>1 wali kelas</strong>, dan dipimpin oleh <strong>Kepala Sekolah Roro Puji Rahayu Ningtias S.Pd.</strong> 
+                    Kami adalah kelas yang menjunjung tinggi nilai-nilai <strong>kebersamaan, disiplin, dan semangat belajar</strong>. 
+                    Seperti rimba yang rimbun, kami tumbuh dengan <strong>ilmu, akhlak, dan prestasi</strong>.
+                </p>
+            </div>
+
+            <div class="vm-grid">
+                <div class="vm-item">
+                    <div class="icon">🎯</div>
+                    <h3>Visi</h3>
+                    <p>Menjadi kelas yang unggul dalam prestasi akademik dan non-akademik, berkarakter kuat, serta menjadi teladan dalam disiplin dan kebersamaan.</p>
+                </div>
+                <div class="vm-item">
+                    <div class="icon">🚀</div>
+                    <h3>Misi</h3>
+                    <p>1. Meningkatkan disiplin belajar dan tanggung jawab.<br>
+                        2. Membangun solidaritas dan gotong royong.<br>
+                        3. Aktif dalam kegiatan sekolah dan sosial.<br>
+                        4. Menjaga adab dan saling menghormati.</p>
+                </div>
+            </div>
+
+            <!-- ===== WALI KELAS & KEPALA SEKOLAH ===== -->
+            <div class="profil-grid">
+                <div class="profil-box">
+                    <div class="bg-icon">🌿</div>
+                    <div class="avatar">🧕</div>
+                    <div class="info">
+                        <h3>Khairani S.Pd.I</h3>
+                        <div class="title">👩‍🏫 Wali Kelas 8C • Guru PAI</div>
+                    </div>
+                </div>
+                <div class="profil-box">
+                    <div class="bg-icon">🌾</div>
+                    <div class="avatar" style="background:linear-gradient(135deg,#4a8a3a,#bc6c25);">🧕</div>
+                    <div class="info">
+                        <h3>Roro Puji Rahayu Ningtias S.Pd.</h3>
+                        <div class="title">👩‍🏫 Kepala Sekolah SMPN 1 Lima Puluh</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== STRUKTUR ===== -->
+        <div id="struktur" class="page">
+            <div class="card">
+                <div class="bg-icon">🌳</div>
+                <h2><span></span> 🌳 Struktur Kelas 8C</h2>
+                <div class="struktur-grid" id="strukturContainer"></div>
+            </div>
+        </div>
+
+        <!-- ===== JADWAL PELAJARAN ===== -->
+        <div id="jadwal" class="page">
+            <div class="card">
+                <div class="bg-icon">📚</div>
+                <h2><span></span> 📅 Jadwal Pelajaran 8C</h2>
+                <div class="jadwal-grid" id="jadwalContainer"></div>
+            </div>
+        </div>
+
+        <!-- ===== JADWAL PIKET ===== -->
+        <div id="piket" class="page">
+            <div class="card">
+                <div class="bg-icon">🧹</div>
+                <h2><span></span> 🧹 Jadwal Piket 8C</h2>
+                <div class="piket-grid" id="piketContainer"></div>
+            </div>
+        </div>
+
+        <!-- ===== SISWA ===== -->
+        <div id="siswa" class="page">
+            <div class="card">
+                <div class="bg-icon">🌱</div>
+                <h2><span></span> 🌿 Siswa-Siswi 8C</h2>
+                <div class="siswa-grid" id="siswaContainer"></div>
+            </div>
+        </div>
+
+        <div class="footer">
+            🌲 Kelas 8C — SMP Negeri 1 Lima Puluh • Rimba Ilmu & Prestasi
+        </div>
+    </div>
+
+    <script>
+        // ===================== DATA SISWA =====================
+        const dataSiswa = [
+            "Rizky Adrian Alifiandra (ketua kelas)",
+            "Devina Putri Andini",
+            "Hanisyah Nasution",
+            "Vita Praningsi",
+            "Aruna Safira Putri Sinaga",
+            "Melani Syaputri",
+            "Hanis Zulaika",
+            "Nazirah Naomi Putri",
+            "Nadia Gytha Kirana Sitepu (bendahara)",
+            "Nuri Indah Sari",
+            "Khaira Aulia",
+            "Zahwa Azhara",
+            "Akila Zahara",
+            "Indy Khinayah",
+            "Syaqila Amanda Nafiza",
+            "Azmi Naufal Rahman",
+            "Alwi Luay Anugerah",
+            "Fikri Khairul Umam",
+            "Zidan Al Nazam",
+            "Abidzar Aidil Hakim",
+            "Tentara Aldrian",
+            "Sazkia Zahra Lesmana",
+            "Syifa Rizqullah Rahman (wakil ketua kelas)",
+            "Aqillah zulya ramadhani",
+            "Lilis Syaqilani",
+            "Wulan Nur huzana",
+            "Aisyah Putri Rizki (sekretaris)",
+            "Alifah zahara Br.Purba",
+            "Audia Syafitri",
+            "Indah Dwi Cahya Ningrum",
+            "Maylika Kanza Afandi (wakil bendahara)",
+            "Siva Airani"
+        ];
+
+        // ===================== STRUKTUR =====================
+        const struktur = [
+            { jabatan: "👑 Ketua Kelas", nama: "Rizky Adrian Alifiandra" },
+            { jabatan: "👔 Wakil Ketua", nama: "Syifa Rizqullah Rahman" },
+            { jabatan: "📝 Sekretaris", nama: "Aisyah Putri Rizki" },
+            { jabatan: "📝 Wakil Sekretaris", nama: "Wulan Nur huzana" },
+            { jabatan: "💰 Bendahara", nama: "Nadia Gytha Kirana Sitepu" },
+            { jabatan: "💰 Wakil Bendahara", nama: "Maylika Kanza Afandi" },
+            { jabatan: "👩‍🏫 Wali Kelas", nama: "Khairani S.Pd.I" }
+        ];
+
+        // ===================== JADWAL PELAJARAN =====================
+        const jadwal = {
+            "Senin": [
+                "TIK", "TIK", "Bahasa Inggris",
+                "~ istirahat ~",
+                "Bahasa Inggris", "Matematika",
+                "~ istirahat ~",
+                "Pendidikan Agama", "Seni Budaya"
+            ],
+            "Selasa": [
+                "IPS", "IPS", "IPA",
+                "~ istirahat ~",
+                "IPA", "Pendidikan Pancasila", "Pendidikan Pancasila",
+                "~ istirahat ~",
+                "Bahasa Indonesia", "Bahasa Indonesia"
+            ],
+            "Rabu": [
+                "PJOK", "PJOK", "PJOK",
+                "~ istirahat ~",
+                "Bahasa Indonesia", "Bahasa Indonesia",
+                "~ istirahat ~",
+                "Pendidikan Agama", "Pendidikan Agama"
+            ],
+            "Kamis": [
+                "IPA", "Matematika", "Matematika",
+                "~ istirahat ~",
+                "IPS", "IPS",
+                "~ istirahat ~",
+                "Seni Budaya", "Seni Budaya"
+            ],
+            "Jumat": [
+                "Bahasa Inggris", "Bahasa Inggris", "Pendidikan Pancasila",
+                "~ istirahat ~",
+                "Matematika", "Matematika"
+            ],
+            "Sabtu": [
+                "Bahasa Indonesia", "Bahasa Indonesia", "Bimbingan Konseling",
+                "~ istirahat ~",
+                "IPA", "IPA",
+                "Kokurikuler"
+            ]
+        };
+
+        // ===================== JADWAL PIKET (MELEBAR) =====================
+        const piket = {
+            "Senin": ["Abizar", "Devina", "Nuri", "Alifa", "Aruna", "Aqillah"],
+            "Selasa": ["Fikri", "Lilis", "Indy", "Hanisyah", "Melani"],
+            "Rabu": ["Zidan", "Azmi", "Viza", "Siva", "Nadia"],
+            "Kamis": ["Tentara", "Wulan", "Syifa", "Saskia"],
+            "Jumat": ["Alwi", "Aisyah", "Audia", "Aqyla", "Hanis"],
+            "Sabtu": ["Rizky", "Naomi", "Indah", "Maylika", "Vita", "Khaira"]
+        };
+
+        // ===================== RENDER =====================
+        function renderStruktur() {
+            document.getElementById('strukturContainer').innerHTML = struktur.map(s => `
+                <div class="struktur-card">
+                    <div class="emoji">${s.jabatan.split(' ')[0]}</div>
+                    <div class="jabatan">${s.jabatan.replace(/[^\w\s]/g,'').trim()}</div>
+                    <div class="nama">${s.nama}</div>
+                </div>
+            `).join('');
+        }
+
+        function renderJadwal() {
+            const container = document.getElementById('jadwalContainer');
+            container.innerHTML = Object.entries(jadwal).map(([hari, mapel]) => {
+                let les = 1;
+                const items = mapel.map(m => {
+                    if (m === '~ istirahat ~') {
+                        return `<div class="mapel-item istirahat">☕ Istirahat</div>`;
+                    }
+                    return `<div class="mapel-item"><span class="waktu">Les ${les++}</span><span class="mapel">${m}</span></div>`;
+                }).join('');
+                return `<div class="hari-card"><h3>📌 ${hari}</h3>${items}</div>`;
+            }).join('');
+        }
+
+        function renderPiket() {
+            const container = document.getElementById('piketContainer');
+            container.innerHTML = Object.entries(piket).map(([hari, nama]) => {
+                const list = nama.map(n => `<span>${n}</span>`).join('');
+                return `
+                    <div class="piket-card">
+                        <h3>📌 ${hari}</h3>
+                        <div class="piket-nama">${list}</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderSiswa() {
+            const container = document.getElementById('siswaContainer');
+            const colors = ['#4a8a3a','#bc6c25','#d4a373','#6aaa4e','#5d8a4e','#8a9a6a','#b8a28a','#3a7a2a'];
+            container.innerHTML = dataSiswa.map((nama,i) => {
+                const inisial = nama.split(' ').filter(w=>w.length>0).map(w=>w[0]).join('').toUpperCase().slice(0,2);
+                const color = colors[i%colors.length];
+                const keterangan = nama.includes('(') ? nama.match(/\((.*?)\)/)?.[1] || '' : '';
+                const namaBersih = nama.replace(/\(.*?\)/,'').trim();
+                return `
+                    <div class="siswa-card">
+                        <div class="avatar" style="background:${color};">${inisial}</div>
+                        <div class="nama">${namaBersih}</div>
+                        ${keterangan ? `<div class="keterangan">${keterangan}</div>` : ''}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // ===================== NAV =====================
+        document.querySelectorAll('.nav button').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+                document.getElementById(this.dataset.page).classList.add('active');
+            });
+        });
+
+        // ===================== FLOATING =====================
+        function createFloating() {
+            const container = document.getElementById('floatingContainer');
+            const items = ['🌲','🌳','🌿','🍃','🍂','🌱','🍀','🌾'];
+            for (let i=0; i<30; i++) {
+                const el = document.createElement('div');
+                el.className = 'floating';
+                el.textContent = items[Math.floor(Math.random()*items.length)];
+                el.style.left = Math.random()*100+'%';
+                el.style.fontSize = (1.2+Math.random()*2.8)+'rem';
+                el.style.animationDuration = (12+Math.random()*20)+'s';
+                el.style.animationDelay = (Math.random()*25)+'s';
+                el.style.opacity = 0.03+Math.random()*0.10;
+                container.appendChild(el);
+            }
+        }
+
+        // ===================== INIT =====================
+        renderStruktur();
+        renderJadwal();
+        renderPiket();
+        renderSiswa();
+        createFloating();
+    </script>
+</body>
+  </html>
