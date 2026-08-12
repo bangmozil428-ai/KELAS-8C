@@ -60,6 +60,19 @@
         }
         .header::before { content: "🌲"; position: absolute; left: 15px; top: 5px; font-size: 3.5rem; opacity: 0.15; }
         .header::after { content: "🌳"; position: absolute; right: 15px; bottom: 5px; font-size: 3.5rem; opacity: 0.15; }
+
+        /* ===== CREDIT DI SAMPING KANAN HEADER (WATERMARK) ===== */
+        .header-credit {
+            position: absolute;
+            bottom: 8px;
+            right: 20px;
+            font-size: 0.7rem;
+            color: #7acf5a;
+            opacity: 0.5;
+            z-index: 2;
+            letter-spacing: 0.5px;
+        }
+
         .header .badge {
             display: inline-block;
             background: #3a7a2a;
@@ -397,6 +410,12 @@
             font-size: 0.85rem;
             margin-top: 10px;
         }
+        .footer .credit {
+            color: #7acf5a;
+            font-size: 0.75rem;
+            opacity: 0.6;
+            margin-top: 4px;
+        }
 
         @media (max-width:600px) {
             .header h1 { font-size: 2rem; }
@@ -406,6 +425,11 @@
             .siswa-grid { grid-template-columns: repeat(auto-fill,minmax(120px,1fr)); }
             .jadwal-grid { grid-template-columns: 1fr; }
             .piket-grid { grid-template-columns: 1fr 1fr; }
+            .header-credit {
+                font-size: 0.55rem;
+                bottom: 4px;
+                right: 10px;
+            }
         }
     </style>
 </head>
@@ -417,6 +441,9 @@
     <div class="container">
         <!-- ===== HEADER ===== -->
         <header class="header">
+            <!-- ===== CREDIT DI SAMPING KANAN HEADER ===== -->
+            <div class="header-credit">✨ By : Rizky Adrian Alifiandra</div>
+
             <div class="badge">🌲 Kelas 8C</div>
             <h1>🌳 RIMBA ILMU</h1>
             <div class="sekolah">🏫 SMP Negeri 1 Lima Puluh</div>
@@ -519,8 +546,10 @@
             </div>
         </div>
 
+        <!-- ===== FOOTER ===== -->
         <div class="footer">
             🌲 Kelas 8C — SMP Negeri 1 Lima Puluh • Rimba Ilmu & Prestasi
+            <div class="credit">✨ Built with ❤️ by : Rizky Adrian Alifiandra</div>
         </div>
     </div>
 
@@ -716,4 +745,4 @@
         createFloating();
     </script>
 </body>
-  </html>
+                </html>
